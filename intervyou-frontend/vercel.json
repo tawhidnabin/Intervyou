@@ -1,6 +1,6 @@
 {
   "buildCommand": "npx ng build --configuration production",
-  "outputDirectory": "dist/intervyou-frontend/browser",
+  "outputDirectory": "dist/intervyou-frontend",
   "framework": null,
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
