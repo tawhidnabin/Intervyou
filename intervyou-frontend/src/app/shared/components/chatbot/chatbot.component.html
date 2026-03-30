@@ -1,0 +1,66 @@
+<!-- Floating chat button -->
+<button class="chat-fab" (click)="toggle()" *ngIf="isLoggedIn" [class.open]="isOpen" aria-label="Open AI Coach">
+  <svg *ngIf="!isOpen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+  </svg>
+  <svg *ngIf="isOpen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+  </svg>
+</button>
+
+<!-- Chat panel -->
+<div class="chat-panel" *ngIf="isOpen && isLoggedIn">
+
+  <!-- Header -->
+  <div class="chat-header">
+    <div class="chat-header-left">
+      <div class="chat-avatar">AI</div>
+      <div>
+        <div class="chat-title">Interview Coach</div>
+        <div class="chat-status">Powered by Ollama</div>
+      </div>
+    </div>
+    <button class="chat-clear" (click)="clearChat()" title="Clear chat">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Messages -->
+  <div class="chat-messages" #messagesContainer>
+    <div *ngFor="let msg of messages" class="chat-msg" [class.user]="msg.role === 'user'" [class.assistant]="msg.role === 'assistant'">
+      <div class="msg-bubble">{{ msg.content }}</div>
+    </div>
+
+    <!-- Typing indicator -->
+    <div class="chat-msg assistant" *ngIf="isLoading">
+      <div class="msg-bubble typing">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      </div>
+    </div>
+
+    <!-- Suggestions (only when no user messages yet) -->
+    <div class="suggestions" *ngIf="messages.length <= 1 && !isLoading">
+      <p class="suggestions-label">Try asking:</p>
+      <button *ngFor="let s of suggestions" class="suggestion-chip" (click)="useSuggestion(s)">{{ s }}</button>
+    </div>
+  </div>
+
+  <!-- Input -->
+  <div class="chat-input-wrap">
+    <textarea
+      class="chat-input"
+      [(ngModel)]="userInput"
+      (keydown)="onKeydown($event)"
+      placeholder="Ask about interview prep..."
+      rows="1"
+      [disabled]="isLoading"
+    ></textarea>
+    <button class="chat-send" (click)="sendMessage()" [disabled]="!userInput.trim() || isLoading" aria-label="Send message">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+      </svg>
+    </button>
+  </div>
+</div>

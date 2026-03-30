@@ -1,0 +1,66 @@
+<div class="history-page">
+  <div class="page-header">
+    <div class="header-inner">
+      <h1>Interview History</h1>
+      <a routerLink="/practice" class="btn-new">+ New Session</a>
+    </div>
+  </div>
+
+  <div class="page-body">
+    <div *ngIf="loading" class="center-state"><div class="spinner-lg"></div></div>
+
+    <ng-container *ngIf="!loading">
+      <!-- Empty state -->
+      <div *ngIf="sessions.length === 0" class="empty-card">
+        <div class="empty-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+        </div>
+        <h2>No sessions yet</h2>
+        <p>Complete your first interview practice to see your history here.</p>
+        <a routerLink="/practice" class="btn-primary">Start Your First Session</a>
+      </div>
+
+      <ng-container *ngIf="sessions.length > 0">
+        <!-- Chart -->
+        <div class="card chart-card">
+          <h3>Score Progress Over Time</h3>
+          <canvas baseChart [data]="lineData" [options]="lineOptions" type="line" height="80"></canvas>
+        </div>
+
+        <!-- Table -->
+        <div class="card">
+          <h3>All Sessions</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Job Role</th>
+                  <th>Questions</th>
+                  <th>Score</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let s of sessions">
+                  <td>{{ s.started_at | date:'MMM d, y' }}</td>
+                  <td>{{ s.job_role }}</td>
+                  <td>{{ s.responses?.length || 0 }}</td>
+                  <td>
+                    <span class="score-badge" [ngClass]="scoreColor(s.overall_score)" *ngIf="s.overall_score">
+                      {{ s.overall_score | number:'1.0-0' }}
+                    </span>
+                    <span class="score-badge score-muted" *ngIf="!s.overall_score">—</span>
+                  </td>
+                  <td>
+                    <button class="view-btn" (click)="view(s.id)" [disabled]="!s.overall_score">View</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>

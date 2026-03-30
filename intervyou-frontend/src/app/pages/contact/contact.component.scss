@@ -1,0 +1,10 @@
+.contact-page { min-height: calc(100vh - 64px); background: #f8fafc; display: flex; align-items: center; justify-content: center; padding: 40px 24px; }
+.contact-card { background: white; border-radius: 16px; padding: 48px 40px; max-width: 520px; width: 100%; box-shadow: 0 4px 24px rgba(0,0,0,0.08); border: 1px solid #e2e8f0; }
+h1 { font-size: 28px; font-weight: 800; color: #0f172a; margin: 0 0 8px; }
+.sub { font-size: 15px; color: #64748b; margin: 0 0 32px; line-height: 1.6; }
+.contact-form { display: flex; flex-direction: column; gap: 16px; }
+.field { display: flex; flex-direction: column; gap: 6px; label { font-size: 13px; font-weight: 600; color: #374151; } input, textarea { padding: 10px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 14px; color: #0f172a; outline: none; font-family: inherit; resize: vertical; &:focus { border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79,70,229,0.1); } } }
+.error-msg { background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; padding: 10px 14px; border-radius: 8px; font-size: 13px; }
+.btn-send { background: #4f46e5; color: white; border: none; padding: 12px; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.2s; &:hover:not(:disabled) { background: #4338ca; } &:disabled { opacity: 0.6; cursor: not-allowed; } }
+.success-state { text-align: center; padding: 20px 0; h2 { font-size: 22px; font-weight: 700; color: #059669; margin: 0 0 8px; } p { color: #64748b; } }
+.success-check { width: 56px; height: 56px; background: #f0fdf4; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; svg { width: 28px; height: 28px; color: #059669; } }

@@ -1,0 +1,50 @@
+<!-- NAVBAR - always visible -->
+<nav class="navbar">
+  <div class="navbar-inner">
+    <!-- Logo -->
+    <a routerLink="/" class="navbar-logo">
+      <span class="logo-interv">Interv</span><span class="logo-you">You</span>
+    </a>
+
+    <!-- Desktop nav -->
+    <div class="navbar-links" *ngIf="user$ | async as user; else publicNav">
+      <a routerLink="/dashboard" class="nav-link">Dashboard</a>
+      <a routerLink="/practice" class="nav-link">Practice</a>
+      <a routerLink="/history" class="nav-link">History</a>
+    </div>
+    <ng-template #publicNav>
+      <div class="navbar-links">
+        <a routerLink="/contact" class="nav-link">Contact</a>
+      </div>
+    </ng-template>
+
+    <!-- Right side -->
+    <div class="navbar-right">
+      <ng-container *ngIf="user$ | async as user; else authBtns">
+        <div class="user-menu" (click)="mobileOpen = !mobileOpen">
+          <div class="avatar">{{ user.name?.charAt(0)?.toUpperCase() }}</div>
+          <span class="user-name">{{ user.name }}</span>
+          <svg class="chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </div>
+        <div class="dropdown" *ngIf="mobileOpen">
+          <a routerLink="/settings" class="dropdown-item" (click)="mobileOpen=false">Settings</a>
+          <button (click)="logout()" class="dropdown-item dropdown-logout">Logout</button>
+        </div>
+      </ng-container>
+      <ng-template #authBtns>
+        <a routerLink="/auth/signin" class="btn-ghost">Sign In</a>
+        <a routerLink="/auth/signup" class="btn-primary">Sign Up</a>
+      </ng-template>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE CONTENT - always offset by navbar height -->
+<main class="has-navbar">
+  <router-outlet></router-outlet>
+</main>
+
+<!-- AI Coach chatbot widget -->
+<app-chatbot></app-chatbot>

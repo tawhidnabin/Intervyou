@@ -1,0 +1,32 @@
+<div class="settings-page">
+  <div class="page-header"><h1>Account Settings</h1></div>
+  <div class="page-body">
+    <!-- Profile -->
+    <div class="card">
+      <h3>Profile Information</h3>
+      <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" class="settings-form">
+        <div class="field"><label>Full Name</label><input type="text" formControlName="name"></div>
+        <div class="field"><label>Email Address</label><input type="email" formControlName="email"></div>
+        <div class="success-msg" *ngIf="profileMsg">{{ profileMsg }}</div>
+        <div class="error-msg" *ngIf="profileErr">{{ profileErr }}</div>
+        <button type="submit" class="btn-save" [disabled]="profileForm.invalid || saving">
+          {{ saving ? 'Saving...' : 'Save Changes' }}
+        </button>
+      </form>
+    </div>
+
+    <!-- Password -->
+    <div class="card">
+      <h3>Change Password</h3>
+      <form [formGroup]="pwForm" (ngSubmit)="changePassword()" class="settings-form">
+        <div class="field"><label>Current Password</label><input type="password" formControlName="old_password"></div>
+        <div class="field"><label>New Password <span class="hint">(min 8 chars)</span></label><input type="password" formControlName="new_password"></div>
+        <div class="success-msg" *ngIf="pwMsg">{{ pwMsg }}</div>
+        <div class="error-msg" *ngIf="pwErr">{{ pwErr }}</div>
+        <button type="submit" class="btn-save" [disabled]="pwForm.invalid || savingPw">
+          {{ savingPw ? 'Updating...' : 'Update Password' }}
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

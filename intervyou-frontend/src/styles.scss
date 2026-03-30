@@ -1,0 +1,25 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Inter', 'Helvetica Neue', sans-serif;
+  background: #f8fafc;
+  color: #1e293b;
+}
+
+a { text-decoration: none; }
+
+:root {
+  --color-primary: #4f46e5;
+  --color-primary-dark: #4338ca;
+  --color-accent: #7c3aed;
+  --color-dark: #0f172a;
+  --color-light: #eef2ff;
+  --color-border: #c7d2fe;
+  --color-success: #059669;
+  --color-warning: #d97706;
+  --color-text: #1e293b;
+  --color-muted: #64748b;
+}

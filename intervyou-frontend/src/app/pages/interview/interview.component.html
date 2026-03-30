@@ -1,0 +1,71 @@
+<div class="interview-container">
+  <!-- Loading -->
+  <div *ngIf="state === 'loading'" class="center-state">
+    <mat-spinner></mat-spinner>
+    <p>Setting up your session...</p>
+  </div>
+
+  <!-- Done -->
+  <div *ngIf="state === 'done'" class="center-state">
+    <mat-spinner></mat-spinner>
+    <p>Saving your results...</p>
+  </div>
+
+  <!-- Main interview UI -->
+  <ng-container *ngIf="state !== 'loading' && state !== 'done' && questions.length">
+    <!-- Progress bar -->
+    <mat-progress-bar mode="determinate" [value]="progress" class="progress-bar"></mat-progress-bar>
+    <p class="progress-label">Question {{ currentIndex + 1 }} of {{ questions.length }}</p>
+
+    <!-- Question card -->
+    <mat-card class="question-card">
+      <mat-card-content>
+        <mat-chip-set>
+          <mat-chip>{{ currentQuestion?.category }}</mat-chip>
+          <mat-chip>{{ currentQuestion?.difficulty }}</mat-chip>
+        </mat-chip-set>
+        <h2 class="question-text">{{ currentQuestion?.text }}</h2>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Recording state -->
+    <div *ngIf="state === 'ready' || state === 'recording'">
+      <app-audio-recorder
+        [disabled]="false"
+        (audioBlob)="onAudioBlob($event)">
+      </app-audio-recorder>
+    </div>
+
+    <!-- Processing state -->
+    <div *ngIf="state === 'processing'" class="center-state">
+      <mat-spinner diameter="48"></mat-spinner>
+      <p class="processing-text">Analysing your response...</p>
+      <p class="processing-hint">This may take 5–20 seconds</p>
+    </div>
+
+    <!-- Feedback state -->
+    <div *ngIf="state === 'feedback' && lastResult" class="feedback-section">
+      <h3>Your Results</h3>
+      <div class="scores-row">
+        <app-score-card label="Overall" [score]="lastResult.overall_score"></app-score-card>
+        <app-score-card label="Fluency" [score]="lastResult.fluency_score * 100"></app-score-card>
+        <app-score-card label="Relevance" [score]="lastResult.relevance_score * 100"></app-score-card>
+        <app-score-card label="Delivery" [score]="lastResult.fluency_score * 100" description="{{ lastResult.speaking_rate }} wpm"></app-score-card>
+      </div>
+
+      <mat-card class="feedback-card">
+        <mat-card-content>
+          <h4>Feedback</h4>
+          <p>{{ lastResult.feedback }}</p>
+          <p class="transcript-label">Your transcript:</p>
+          <p class="transcript">{{ lastResult.transcript || '(No speech detected)' }}</p>
+        </mat-card-content>
+      </mat-card>
+
+      <button mat-raised-button color="primary" (click)="nextQuestion()" class="next-btn">
+        {{ currentIndex < questions.length - 1 ? 'Next Question' : 'Finish Interview' }}
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    </div>
+  </ng-container>
+</div>

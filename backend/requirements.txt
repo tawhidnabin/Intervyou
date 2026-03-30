@@ -1,0 +1,13 @@
+flask
+flask-cors
+flask-sqlalchemy
+flask-jwt-extended
+openai-whisper
+librosa
+sentence-transformers
+numpy
+scipy
+werkzeug
+requests
+langchain-ollama
+langchain-core

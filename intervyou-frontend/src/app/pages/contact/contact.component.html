@@ -1,0 +1,29 @@
+<div class="contact-page">
+  <div class="contact-card">
+    <h1>Contact Us</h1>
+    <p class="sub">Please use the form below to contact our team. We'll get back to you as soon as possible!</p>
+
+    <div class="success-state" *ngIf="success">
+      <div class="success-check">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h2>Message sent</h2>
+      <p>Thanks for reaching out. We'll get back to you soon.</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="contact-form" *ngIf="!success">
+      <div class="field">
+        <label>Email address</label>
+        <input type="email" formControlName="email" placeholder="you@example.com">
+      </div>
+      <div class="field">
+        <label>Message</label>
+        <textarea formControlName="message" rows="5" placeholder="How can we help you?"></textarea>
+      </div>
+      <div class="error-msg" *ngIf="error">{{ error }}</div>
+      <button type="submit" class="btn-send" [disabled]="form.invalid || loading">
+        {{ loading ? 'Sending...' : 'Send Message' }}
+      </button>
+    </form>
+  </div>
+</div>

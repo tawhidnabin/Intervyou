@@ -1,0 +1,87 @@
+<div class="dashboard">
+  <!-- Welcome -->
+  <div class="welcome-section">
+    <div class="welcome-inner">
+      <div>
+        <h1 class="welcome-title">Welcome back, {{ user?.name || 'there' }}</h1>
+        <p class="welcome-sub">Ready to practise? Your next interview could be just around the corner.</p>
+      </div>
+      <a routerLink="/practice" class="btn-start">Start Practice Session</a>
+    </div>
+  </div>
+
+  <div class="page-inner">
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon stat-icon-blue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="stat-body">
+          <div class="stat-value">{{ stats.sessions_count }}</div>
+          <div class="stat-label">Sessions Completed</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon stat-icon-green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div class="stat-body">
+          <div class="stat-value">{{ stats.avg_score || '—' }}</div>
+          <div class="stat-label">Average Score</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon stat-icon-purple">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="stat-body">
+          <div class="stat-value">{{ stats.completed_count }}</div>
+          <div class="stat-label">Scored Sessions</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-row">
+      <!-- Quick Actions -->
+      <div class="card">
+        <h2 class="card-title">Quick Actions</h2>
+        <div class="actions-list">
+          <a *ngFor="let a of quickActions" [routerLink]="a.route" class="action-item">
+            <span class="action-icon" [style.background]="a.color + '18'">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" [innerHTML]="a.svg"></svg>
+            </span>
+            <span class="action-label">{{ a.label }}</span>
+            <span class="action-arrow">&#8594;</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Recent Sessions -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Recent Sessions</h2>
+          <a routerLink="/history" class="view-all">View all</a>
+        </div>
+        <div *ngIf="recentSessions.length === 0" class="empty-state">
+          <p>No sessions yet. <a routerLink="/practice">Start your first practice!</a></p>
+        </div>
+        <div class="sessions-list" *ngIf="recentSessions.length > 0">
+          <div class="session-row" *ngFor="let s of recentSessions">
+            <div class="session-info">
+              <span class="session-role">{{ s.job_role }}</span>
+              <span class="session-date">{{ s.started_at | date:'MMM d, y' }}</span>
+            </div>
+            <div class="session-right">
+              <span class="session-score" [ngClass]="getScoreClass(s.overall_score)" *ngIf="s.overall_score">
+                {{ s.overall_score | number:'1.0-0' }}
+              </span>
+              <span class="session-score score-muted" *ngIf="!s.overall_score">—</span>
+              <a [routerLink]="['/practice', s.id, 'results']" class="view-link" *ngIf="s.overall_score">View</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,149 @@
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">AI-Powered Interview Coaching</div>
+    <h1 class="hero-title">Supercharge Your Interviews<br><span class="gradient-text">With AI</span></h1>
+    <p class="hero-sub">Practice real interview questions, get instant AI feedback on your delivery, fluency and relevance — and land your dream job with confidence.</p>
+    <div class="hero-actions">
+      <a routerLink="/auth/signup" class="btn-hero-primary">
+        <span>Get Started Free</span>
+        <span class="btn-arrow">&#8594;</span>
+      </a>
+      <a routerLink="/auth/signin" class="btn-hero-ghost">Sign In</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num">3</span><span class="stat-label">Difficulty Levels</span></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><span class="stat-num">AI</span><span class="stat-label">Powered Scoring</span></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Private Sessions</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- LEVELS SECTION -->
+<section class="levels-section">
+  <div class="section-inner">
+    <h2 class="section-title">Choose Your Challenge Level</h2>
+    <p class="section-sub">From first-time interviewees to senior leaders — we have questions for every stage.</p>
+    <div class="levels-grid">
+      <div class="level-card level-beginner">
+        <div class="level-icon level-icon-beginner">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3>Beginner</h3>
+        <p>Foundational questions about yourself, your strengths and your motivations. Perfect for first interviews.</p>
+        <ul>
+          <li>Tell me about yourself</li>
+          <li>What are your strengths?</li>
+          <li>Why do you want this job?</li>
+        </ul>
+        <a routerLink="/auth/signup" class="level-cta">Start Beginner &#8594;</a>
+      </div>
+      <div class="level-card level-intermediate level-featured">
+        <div class="level-badge-top">Most Popular</div>
+        <div class="level-icon level-icon-intermediate">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <h3>Intermediate</h3>
+        <p>Behavioural STAR questions requiring specific examples. Ideal for candidates with 1–5 years experience.</p>
+        <ul>
+          <li>Describe a challenge you overcame</li>
+          <li>Tell me about a time you led a team</li>
+          <li>How do you handle conflict?</li>
+        </ul>
+        <a routerLink="/auth/signup" class="level-cta">Start Intermediate &#8594;</a>
+      </div>
+      <div class="level-card level-master">
+        <div class="level-icon level-icon-master">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <h3>Master</h3>
+        <p>Senior-level strategic and complex situational questions. For leadership and executive roles.</p>
+        <ul>
+          <li>How do you drive organisational change?</li>
+          <li>Describe your most complex problem</li>
+          <li>How do you balance tech debt vs delivery?</li>
+        </ul>
+        <a routerLink="/auth/signup" class="level-cta">Start Master &#8594;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPANY LOGOS -->
+<section class="logos-section">
+  <p class="logos-label">Get ready for jobs at leading firms</p>
+  <div class="logos-row">
+    <span class="logo-pill" *ngFor="let c of companies">{{ c }}</span>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section">
+  <div class="section-inner">
+    <h2 class="section-title">Everything you need to ace your interview</h2>
+    <p class="section-sub">From AI transcription to NLP relevance scoring — IntervYou gives you the full picture.</p>
+    <div class="features-grid">
+      <div class="feature-card" *ngFor="let f of features">
+        <div class="feature-icon-wrap">
+          <svg class="feature-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" [innerHTML]="f.svgPath"></svg>
+        </div>
+        <h3 class="feature-title">{{ f.title }}</h3>
+        <p class="feature-desc">{{ f.desc }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <div class="section-inner">
+    <h2 class="section-title">How it works</h2>
+    <div class="steps-row">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Create an account</h3>
+        <p>Sign up in seconds — no credit card required.</p>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Pick your level</h3>
+        <p>Choose Beginner, Intermediate or Master difficulty.</p>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Record your answers</h3>
+        <p>Answer 5 AI-curated questions using your microphone.</p>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3>Get instant feedback</h3>
+        <p>Receive scores on fluency, relevance, pace and delivery.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <h2>Ready to ace your next interview?</h2>
+    <p>Join candidates who practise smarter with IntervYou.</p>
+    <a routerLink="/auth/signup" class="btn-cta">Start Practising Free</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <span class="footer-logo"><span class="footer-logo-interv">Interv</span><span class="footer-logo-you">You</span></span>
+    <div class="footer-links">
+      <a routerLink="/contact">Contact</a>
+    </div>
+    <span class="footer-copy">&copy; 2026 IntervYou. All rights reserved.</span>
+  </div>
+</footer>

@@ -1,0 +1,191 @@
+<div class="session-page">
+
+  <!-- Loading -->
+  <div *ngIf="state === 'loading'" class="full-center">
+    <div class="pulse-ring"></div>
+    <p>Loading your questions...</p>
+  </div>
+
+  <!-- Done -->
+  <div *ngIf="state === 'done'" class="full-center">
+    <div class="done-check">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h2>Session Complete</h2>
+    <p>Saving your results...</p>
+    <div class="spinner-lg"></div>
+  </div>
+
+  <ng-container *ngIf="state !== 'loading' && state !== 'done' && questions.length">
+
+    <!-- Sticky header -->
+    <div class="session-header">
+      <div class="header-inner">
+        <div class="level-badge" [style.background]="levelInfo.bg" [style.color]="levelInfo.color">
+          {{ levelInfo.label }}
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-track">
+            <div class="progress-fill" [style.width.%]="progress"></div>
+          </div>
+          <span class="progress-text">{{ currentIndex + 1 }} / {{ questions.length }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="session-body">
+
+      <!-- Question card -->
+      <div class="question-card" [class.animate-in]="state === 'ready'">
+        <div class="q-meta">
+          <span class="q-cat-badge">{{ currentQuestion?.category }}</span>
+          <span class="q-num-badge">Question {{ currentIndex + 1 }}</span>
+        </div>
+        <h2 class="q-text">{{ currentQuestion?.text }}</h2>
+        <div class="q-tip">
+          <span class="tip-label">Tip:</span>
+          <span *ngIf="level === 'beginner'">Be honest and concise. 1&#8211;2 minutes is ideal.</span>
+          <span *ngIf="level === 'intermediate'">Use the STAR method &#8212; Situation, Task, Action, Result.</span>
+          <span *ngIf="level === 'master'">Demonstrate strategic thinking and quantify your impact.</span>
+        </div>
+      </div>
+
+      <!-- Error banner -->
+      <div class="error-banner" *ngIf="error">
+        <span>{{ error }}</span>
+        <button (click)="error = ''">&#10005;</button>
+      </div>
+
+      <!-- READY: input mode toggle + input area -->
+      <div *ngIf="state === 'ready'">
+
+        <!-- Mode toggle -->
+        <div class="mode-toggle">
+          <button class="mode-btn" [class.active]="inputMode === 'voice'" (click)="setMode('voice')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+            Voice
+          </button>
+          <button class="mode-btn" [class.active]="inputMode === 'text'" (click)="setMode('text')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            Type
+          </button>
+        </div>
+
+        <!-- Voice mode -->
+        <div *ngIf="inputMode === 'voice'" class="recorder-wrap">
+          <p class="input-hint">Click the microphone to record your answer</p>
+          <app-audio-recorder [disabled]="false" (audioBlob)="onAudioBlob($event)"></app-audio-recorder>
+        </div>
+
+        <!-- Text mode -->
+        <div *ngIf="inputMode === 'text'" class="text-input-wrap">
+          <p class="input-hint">Type your answer below. Aim for at least 3&#8211;4 sentences.</p>
+          <textarea
+            class="text-area"
+            [(ngModel)]="textAnswer"
+            placeholder="Type your answer here..."
+            rows="8"
+            maxlength="5000"
+          ></textarea>
+          <div class="text-footer">
+            <span class="char-count" [class.short]="textAnswer.length > 0 && textAnswer.length < 20">
+              {{ textAnswer.length }} / 5000 characters
+            </span>
+            <button class="btn-submit-text" (click)="submitText()" [disabled]="!textAnswer.trim()">
+              Submit Answer
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROCESSING -->
+      <div *ngIf="state === 'processing'" class="processing-card">
+        <div class="processing-animation">
+          <div class="wave-bar" *ngFor="let i of [1,2,3,4,5,6,7,8]" [style.animation-delay]="(i * 0.1) + 's'"></div>
+        </div>
+        <h3>Analysing your response</h3>
+        <p class="processing-step">{{ activeSteps[processingStep] }}</p>
+        <div class="processing-pills">
+          <span class="pill" *ngFor="let step of activeSteps; let i = index" [class.active]="processingStep >= i">
+            {{ step.split('...')[0] }}
+          </span>
+        </div>
+      </div>
+
+      <!-- FEEDBACK -->
+      <div *ngIf="state === 'feedback' && lastResult" class="feedback-wrap">
+
+        <!-- Input mode indicator -->
+        <div class="mode-indicator">
+          Answered via {{ lastResult.input_mode === 'text' ? 'text' : 'voice recording' }}
+        </div>
+
+        <!-- Score ring row -->
+        <div class="scores-row">
+          <div class="score-ring" [style.--ring-color]="scoreColor(lastResult.overall_score)" [style.background]="scoreBg(lastResult.overall_score)">
+            <span class="ring-num" [style.color]="scoreColor(lastResult.overall_score)">{{ lastResult.overall_score | number:'1.0-0' }}</span>
+            <span class="ring-lbl">Overall</span>
+            <span class="ring-tag" [style.color]="scoreColor(lastResult.overall_score)">{{ scoreLabel(lastResult.overall_score) }}</span>
+          </div>
+          <div class="score-ring" [style.--ring-color]="scoreColor(lastResult.fluency_score * 100)" [style.background]="scoreBg(lastResult.fluency_score * 100)">
+            <span class="ring-num" [style.color]="scoreColor(lastResult.fluency_score * 100)">{{ lastResult.fluency_score * 100 | number:'1.0-0' }}</span>
+            <span class="ring-lbl">Fluency</span>
+          </div>
+          <div class="score-ring" [style.--ring-color]="scoreColor(lastResult.relevance_score * 100)" [style.background]="scoreBg(lastResult.relevance_score * 100)">
+            <span class="ring-num" [style.color]="scoreColor(lastResult.relevance_score * 100)">{{ lastResult.relevance_score * 100 | number:'1.0-0' }}</span>
+            <span class="ring-lbl">Relevance</span>
+          </div>
+          <div class="score-ring" style="background:#f1f5f9" *ngIf="lastResult.input_mode !== 'text'">
+            <span class="ring-num" style="color:#4f46e5">{{ lastResult.speaking_rate | number:'1.0-0' }}</span>
+            <span class="ring-lbl">WPM</span>
+          </div>
+        </div>
+
+        <!-- Metric chips -->
+        <div class="metric-chips">
+          <span class="chip chip-neutral" *ngIf="lastResult.input_mode !== 'text'">{{ lastResult.pause_count }} pauses</span>
+          <span class="chip" [class.chip-warn]="lastResult.filler_count > 5" [class.chip-good]="lastResult.filler_count <= 5">
+            {{ lastResult.filler_count }} filler words
+          </span>
+        </div>
+
+        <!-- Feedback -->
+        <div class="feedback-card">
+          <div class="feedback-header"><h4>AI Feedback</h4></div>
+          <p>{{ lastResult.feedback }}</p>
+        </div>
+
+        <!-- Transcript -->
+        <div class="transcript-card">
+          <div class="transcript-header"><h4>{{ lastResult.input_mode === 'text' ? 'Your Answer' : 'Your Transcript' }}</h4></div>
+          <p>{{ lastResult.transcript || '(No content detected)' }}</p>
+        </div>
+
+        <!-- AI Deep Analysis (LLM-powered) -->
+        <div class="ai-analysis-card">
+          <div class="ai-analysis-header">
+            <div class="ai-badge">AI Coach Analysis</div>
+            <span class="ai-powered">Powered by Ollama</span>
+          </div>
+          <div *ngIf="aiAnalysisLoading" class="ai-loading">
+            <div class="ai-loading-bar"></div>
+            <p>Generating deep analytical feedback...</p>
+          </div>
+          <div *ngIf="aiAnalysis" class="ai-analysis-content">
+            <pre class="ai-text">{{ aiAnalysis }}</pre>
+          </div>
+          <div *ngIf="!aiAnalysisLoading && !aiAnalysis" class="ai-unavailable">
+            <p>AI analysis is not available for this response. Make sure Ollama is running.</p>
+          </div>
+        </div>
+
+        <!-- Next button -->
+        <button class="btn-next" (click)="nextQuestion()">
+          <span>{{ currentIndex < questions.length - 1 ? 'Next Question' : 'Finish & See Results' }}</span>
+          <span class="btn-arrow">&#8594;</span>
+        </button>
+      </div>
+
+    </div>
+  </ng-container>
+</div>

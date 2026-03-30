@@ -1,0 +1,90 @@
+<div class="results-page">
+  <div *ngIf="loading" class="center-state"><div class="spinner-lg"></div></div>
+  <div *ngIf="error" class="center-state"><p>{{ error }}</p><a routerLink="/history">Back to History</a></div>
+
+  <ng-container *ngIf="!loading && session">
+    <!-- Hero score -->
+    <div class="results-hero">
+      <div class="hero-inner">
+        <div class="overall-ring" [style.border-color]="scoreColor(session.overall_score)">
+          <span class="ring-score" [style.color]="scoreColor(session.overall_score)">{{ session.overall_score | number:'1.0-0' }}</span>
+          <span class="ring-label">Overall</span>
+        </div>
+        <div class="hero-text">
+          <h1>Session Complete</h1>
+          <p>{{ session.job_role }} · {{ session.started_at | date:'MMM d, y' }}</p>
+          <p class="hero-sub">You answered {{ session.responses?.length }} questions. Here's how you did.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="results-body">
+      <div class="results-grid">
+        <!-- Radar chart -->
+        <div class="card">
+          <h3>Performance Overview</h3>
+          <div class="chart-wrap" *ngIf="session.responses?.length">
+            <canvas baseChart [data]="radarData" [options]="radarOptions" type="radar"></canvas>
+          </div>
+        </div>
+
+        <!-- Score breakdown -->
+        <div class="card">
+          <h3>Score Breakdown</h3>
+          <div class="breakdown-list" *ngIf="session.responses?.length">
+            <div class="breakdown-item" *ngFor="let r of session.responses; let i = index">
+              <span class="b-label">Q{{ i+1 }}: {{ r.question_text | slice:0:40 }}...</span>
+              <div class="b-bar-wrap">
+                <div class="b-bar" [style.width.%]="r.overall_score" [style.background]="scoreColor(r.overall_score)"></div>
+              </div>
+              <span class="b-score" [style.color]="scoreColor(r.overall_score)">{{ r.overall_score | number:'1.0-0' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Per-question detail -->
+      <div class="card">
+        <h3>Detailed Feedback</h3>
+        <div class="q-list">
+          <div class="q-item" *ngFor="let r of session.responses; let i = index">
+            <div class="q-item-header" (click)="expandedIndex = expandedIndex === i ? -1 : i">
+              <div class="q-item-left">
+                <span class="q-num">Q{{ i+1 }}</span>
+                <span class="q-item-text">{{ r.question_text }}</span>
+              </div>
+              <div class="q-item-right">
+                <span class="q-item-score" [style.color]="scoreColor(r.overall_score)">{{ r.overall_score | number:'1.0-0' }}</span>
+                <span class="expand-icon">{{ expandedIndex === i ? '▲' : '▼' }}</span>
+              </div>
+            </div>
+            <div class="q-item-body" *ngIf="expandedIndex === i">
+              <div class="chips-row">
+                <span class="chip">Fluency: {{ pct(r.fluency_score) }}%</span>
+                <span class="chip">Relevance: {{ pct(r.relevance_score) }}%</span>
+                <span class="chip">{{ r.speaking_rate | number:'1.0-0' }} wpm</span>
+                <span class="chip">{{ r.filler_count }} fillers</span>
+                <span class="chip">{{ r.pause_count }} pauses</span>
+              </div>
+              <div class="transcript-box">
+                <strong>Transcript:</strong>
+                <p>{{ r.transcript || '(No speech detected)' }}</p>
+              </div>
+              <div class="feedback-box">
+                <strong>Feedback:</strong>
+                <p>{{ r.feedback_text }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="actions-row">
+        <a routerLink="/practice" class="btn-primary">Practice Again</a>
+        <a routerLink="/history" class="btn-ghost">View History</a>
+        <a routerLink="/dashboard" class="btn-ghost">Dashboard</a>
+      </div>
+    </div>
+  </ng-container>
+</div>

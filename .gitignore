@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.env
+backend/instance/
+backend/uploads/
+backend/_ffmpeg_bin/
+
+# Node
+node_modules/
+intervyou-frontend/node_modules/
+intervyou-frontend/dist/
+intervyou-frontend/.angular/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Misc
+*.log
+package-lock.json
+intervyou-frontend/package-lock.json

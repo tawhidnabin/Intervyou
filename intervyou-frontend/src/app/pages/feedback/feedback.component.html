@@ -1,0 +1,78 @@
+<div class="feedback-container">
+  <div *ngIf="loading" class="center-state">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <div *ngIf="error" class="center-state">
+    <p>{{ error }}</p>
+    <a routerLink="/history" mat-button>Back to History</a>
+  </div>
+
+  <ng-container *ngIf="!loading && session">
+    <div class="header-row">
+      <div>
+        <h1>Session Feedback</h1>
+        <p class="subtitle">{{ session.job_role }} — {{ session.started_at | date:'medium' }}</p>
+      </div>
+      <div class="overall-badge" [class.green]="session.overall_score >= 70"
+        [class.amber]="session.overall_score >= 40 && session.overall_score < 70"
+        [class.red]="session.overall_score < 40">
+        {{ session.overall_score | number:'1.0-0' }}
+      </div>
+    </div>
+
+    <mat-tab-group>
+      <!-- Overview tab -->
+      <mat-tab label="Overview">
+        <div class="tab-content">
+          <div class="chart-container" *ngIf="session.responses?.length">
+            <canvas baseChart [data]="radarData" [options]="radarOptions" type="radar"></canvas>
+          </div>
+          <div class="scores-row" *ngIf="session.responses?.length">
+            <app-score-card label="Fluency"
+              [score]="scoreToPercent(session.responses[0]?.fluency_score)"></app-score-card>
+            <app-score-card label="Relevance"
+              [score]="scoreToPercent(session.responses[0]?.relevance_score)"></app-score-card>
+            <app-score-card label="Overall"
+              [score]="session.overall_score"></app-score-card>
+          </div>
+        </div>
+      </mat-tab>
+
+      <!-- Detailed tab -->
+      <mat-tab label="Detailed">
+        <div class="tab-content">
+          <mat-accordion>
+            <mat-expansion-panel *ngFor="let r of session.responses; let i = index">
+              <mat-expansion-panel-header>
+                <mat-panel-title>Q{{ i + 1 }}: {{ r.question_text }}</mat-panel-title>
+                <mat-panel-description>Score: {{ r.overall_score }}</mat-panel-description>
+              </mat-expansion-panel-header>
+
+              <div class="response-detail">
+                <mat-chip-set>
+                  <mat-chip>Fluency: {{ scoreToPercent(r.fluency_score) }}%</mat-chip>
+                  <mat-chip>Relevance: {{ scoreToPercent(r.relevance_score) }}%</mat-chip>
+                  <mat-chip>{{ r.speaking_rate }} wpm</mat-chip>
+                  <mat-chip>{{ r.filler_count }} fillers</mat-chip>
+                  <mat-chip>{{ r.pause_count }} pauses</mat-chip>
+                </mat-chip-set>
+                <p class="transcript">{{ r.transcript || '(No transcript)' }}</p>
+                <p class="feedback-text">{{ r.feedback_text }}</p>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+
+    <div class="actions">
+      <a routerLink="/history" mat-stroked-button>
+        <mat-icon>arrow_back</mat-icon> Back to History
+      </a>
+      <a routerLink="/interview" mat-raised-button color="primary">
+        <mat-icon>replay</mat-icon> Practice Again
+      </a>
+    </div>
+  </ng-container>
+</div>
