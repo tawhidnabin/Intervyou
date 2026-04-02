@@ -7,13 +7,10 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
   const auth = inject(AuthService);
   const token = auth.getToken();
 
-  // Don't attach token to auth endpoints (login, register, etc.)
-  const isAuthEndpoint = req.url.includes('/api/auth/');
-  const authReq = (token && !isAuthEndpoint)
+  // Attach token to all requests (needed for auth endpoints like /logout, /refresh, /me)
+  const authReq = token
     ? req.clone({ setHeaders: { Authorization: `Bearer ${token}` } })
-    : token
-      ? req.clone({ setHeaders: { Authorization: `Bearer ${token}` } })
-      : req;
+    : req;
 
   return next(authReq).pipe(
     catchError(err => {

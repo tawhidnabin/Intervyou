@@ -13,7 +13,8 @@ echo "========================================="
 
 echo ""
 echo "=== 1. Updating system ==="
-sudo apt update && sudo apt upgrade -y
+export DEBIAN_FRONTEND=noninteractive
+sudo apt update && sudo DEBIAN_FRONTEND=noninteractive apt upgrade -y
 
 echo ""
 echo "=== 2. Installing Python 3.11 ==="
@@ -68,6 +69,8 @@ cd ..
 
 echo ""
 echo "=== 11. Setting up systemd services ==="
+sudo touch /var/log/intervyou-access.log /var/log/intervyou-error.log
+sudo chown ubuntu:ubuntu /var/log/intervyou-access.log /var/log/intervyou-error.log
 sudo cp deploy/intervyou-aws.service /etc/systemd/system/intervyou.service
 sudo systemctl daemon-reload
 sudo systemctl enable intervyou
