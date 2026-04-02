@@ -19,7 +19,7 @@ class InterviewCoach:
         if cls._model is not None:
             return
         try:
-            cls._model = OllamaLLM(model="qwen3:8b")
+            cls._model = OllamaLLM(model="qwen3:1.7b")
 
             cls._chat_template = ChatPromptTemplate.from_template("""/no_think
 You are IntervYou AI Coach. Give concise interview advice.
@@ -69,11 +69,11 @@ DELIVERY: [pace and filler assessment]
 BETTER ANSWER: [suggested improvement]
 """)
 
-            print('Ollama LLM initialized with qwen3:8b model')
+            print('Ollama LLM initialized with qwen3:1.7b model')
         except Exception as e:
             print(f'Failed to initialize Ollama LLM: {e}')
             print('Make sure Ollama is running: ollama serve')
-            print('And qwen3:8b is installed: ollama pull qwen3:8b')
+            print('And qwen3:1.7b is installed: ollama pull qwen3:1.7b')
             raise
 
     @classmethod
