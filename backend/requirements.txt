@@ -11,3 +11,5 @@ werkzeug
 requests
 langchain-ollama
 langchain-core
+scikit-learn
+joblib

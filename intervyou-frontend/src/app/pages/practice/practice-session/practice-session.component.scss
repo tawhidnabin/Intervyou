@@ -355,3 +355,12 @@
   text-align: center;
   p { font-size: 13px; color: #94a3b8; margin: 0; }
 }
+
+/* ── Confidence badge ── */
+.confidence-chip {
+  font-weight: 600;
+  border: 1.5px solid;
+}
+.conf-high { background: #f0fdf4; color: #059669; border-color: #bbf7d0; }
+.conf-medium { background: #fffbeb; color: #d97706; border-color: #fde68a; }
+.conf-low { background: #fef2f2; color: #dc2626; border-color: #fecaca; }

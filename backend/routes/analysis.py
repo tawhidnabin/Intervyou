@@ -7,6 +7,7 @@ from services.transcription import transcribe
 from services.audio_analysis import analyze_audio, analyze_transcript
 from services.nlp_analysis import score_relevance
 from services.feedback import generate_feedback, compute_overall_score
+from services.confidence_model import predict_confidence
 
 analysis_bp = Blueprint('analysis', __name__)
 
@@ -59,6 +60,14 @@ def submit_analysis():
         db.session.add(response)
         db.session.commit()
 
+        # Run confidence prediction
+        confidence = predict_confidence(
+            audio_path=audio_path,
+            transcript=transcript,
+            speaking_rate=text_metrics['speaking_rate'],
+            filler_count=text_metrics['filler_count']
+        )
+
         return jsonify({
             'response_id': response.id, 'transcript': transcript,
             'speaking_rate': text_metrics['speaking_rate'],
@@ -66,7 +75,8 @@ def submit_analysis():
             'pause_count': audio_metrics['pause_count'],
             'relevance_score': relevance, 'fluency_score': text_metrics['fluency_score'],
             'overall_score': overall, 'feedback': feedback,
-            'input_mode': 'voice'
+            'input_mode': 'voice',
+            'confidence': confidence
         }), 200
     except Exception as e:
         import traceback
@@ -119,6 +129,14 @@ def submit_text_analysis():
         db.session.add(response)
         db.session.commit()
 
+        # Run confidence prediction (text-only, no audio)
+        confidence = predict_confidence(
+            audio_path=None,
+            transcript=answer_text,
+            speaking_rate=text_metrics['speaking_rate'],
+            filler_count=text_metrics['filler_count']
+        )
+
         return jsonify({
             'response_id': response.id, 'transcript': answer_text,
             'speaking_rate': text_metrics['speaking_rate'],
@@ -126,7 +144,8 @@ def submit_text_analysis():
             'pause_count': 0,
             'relevance_score': relevance, 'fluency_score': fluency,
             'overall_score': overall, 'feedback': feedback,
-            'input_mode': 'text'
+            'input_mode': 'text',
+            'confidence': confidence
         }), 200
     except Exception as e:
         import traceback

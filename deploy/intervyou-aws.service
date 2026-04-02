@@ -1,0 +1,15 @@
+[Unit]
+Description=IntervYou Flask Backend
+After=network.target ollama.service
+
+[Service]
+User=ubuntu
+WorkingDirectory=/home/ubuntu/Intervyou/backend
+EnvironmentFile=/home/ubuntu/Intervyou/backend/.env
+Environment="PATH=/home/ubuntu/Intervyou/venv/bin:/usr/bin:/usr/local/bin"
+ExecStart=/home/ubuntu/Intervyou/venv/bin/gunicorn --bind 127.0.0.1:5000 --workers 2 --timeout 120 --access-logfile /var/log/intervyou-access.log --error-logfile /var/log/intervyou-error.log "app:create_app()"
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
