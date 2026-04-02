@@ -1,4 +1,4 @@
-# IntervYou — AI Interview Practice Platform
+# IntervYou 
 
 ## Setup
 
