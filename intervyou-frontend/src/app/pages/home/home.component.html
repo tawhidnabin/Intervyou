@@ -1,149 +1,177 @@
-<!-- HERO -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- HERO — full viewport, massive type, Superlist-inspired           -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
 <section class="hero">
-  <div class="hero-inner">
-    <div class="hero-badge">AI-Powered Interview Coaching</div>
-    <h1 class="hero-title">Supercharge Your Interviews<br><span class="gradient-text">With AI</span></h1>
-    <p class="hero-sub">Practice real interview questions, get instant AI feedback on your delivery, fluency and relevance — and land your dream job with confidence.</p>
-    <div class="hero-actions">
-      <a routerLink="/auth/signup" class="btn-hero-primary">
-        <span>Get Started Free</span>
-        <span class="btn-arrow">&#8594;</span>
-      </a>
-      <a routerLink="/auth/signin" class="btn-hero-ghost">Sign In</a>
+  <div class="hero-content">
+    <p class="hero-eyebrow">AI-powered interview practice</p>
+    <h1 class="hero-headline">
+      Nail your next<br>
+      <span class="hero-accent">interview.</span>
+    </h1>
+    <p class="hero-body">
+      Practice with AI-curated questions. Get scored on fluency, relevance and confidence in real time. Track your progress and land the job.
+    </p>
+    <div class="hero-cta-row">
+      <a routerLink="/auth/signup" class="cta-primary">Get started — it's free</a>
+      <a routerLink="/auth/signin" class="cta-secondary">Sign in</a>
     </div>
-    <div class="hero-stats">
-      <div class="stat"><span class="stat-num">3</span><span class="stat-label">Difficulty Levels</span></div>
-      <div class="stat-divider"></div>
-      <div class="stat"><span class="stat-num">AI</span><span class="stat-label">Powered Scoring</span></div>
-      <div class="stat-divider"></div>
-      <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Private Sessions</span></div>
+  </div>
+  <div class="hero-glow"></div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- LOGOS — scrolling marquee strip                                  -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="logos">
+  <p class="logos-label">Prepare for roles at</p>
+  <div class="marquee">
+    <div class="marquee-track">
+      <span *ngFor="let c of companies" class="marquee-item">{{ c }}</span>
+      <span *ngFor="let c of companies" class="marquee-item">{{ c }}</span>
     </div>
   </div>
 </section>
 
-<!-- LEVELS SECTION -->
-<section class="levels-section">
-  <div class="section-inner">
-    <h2 class="section-title">Choose Your Challenge Level</h2>
-    <p class="section-sub">From first-time interviewees to senior leaders — we have questions for every stage.</p>
-    <div class="levels-grid">
-      <div class="level-card level-beginner">
-        <div class="level-icon level-icon-beginner">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- BENTO — feature grid, Superlist-style bento cards                -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="bento">
+  <div class="bento-inner">
+    <h2 class="section-heading">Everything you need,<br>nothing you don't.</h2>
+
+    <div class="bento-grid">
+      <!-- Large card -->
+      <div class="bento-card bento-lg">
+        <div class="bento-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
         </div>
+        <h3>Voice &amp; Text Practice</h3>
+        <p>Record your answer or type it. Our AI pipeline transcribes, analyses and scores your response in seconds.</p>
+      </div>
+
+      <!-- Small cards -->
+      <div class="bento-card">
+        <div class="bento-icon bento-icon-green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <h3>Real-time Scoring</h3>
+        <p>Fluency, relevance, confidence and delivery — scored instantly by Sentence-BERT and our custom ML model.</p>
+      </div>
+
+      <div class="bento-card">
+        <div class="bento-icon bento-icon-amber">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <h3>AI Coach</h3>
+        <p>Chat with a local LLM coach for personalised interview tips, answer structures and STAR method guidance.</p>
+      </div>
+
+      <div class="bento-card">
+        <div class="bento-icon bento-icon-red">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </div>
+        <h3>Progress Tracking</h3>
+        <p>Charts, session history and per-question breakdowns so you can see exactly where you're improving.</p>
+      </div>
+
+      <div class="bento-card bento-wide">
+        <div class="bento-icon bento-icon-purple">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <h3>Private &amp; Secure</h3>
+        <p>Your recordings and data stay on the server. No third-party APIs for your audio. Everything processed locally.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- LEVELS — three difficulty tiers                                  -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="levels">
+  <div class="levels-inner">
+    <h2 class="section-heading section-heading-light">Three levels.<br>One goal.</h2>
+    <p class="levels-sub">From your first interview to C-suite — pick the challenge that matches you.</p>
+
+    <div class="levels-row">
+      <div class="level-tile">
+        <span class="level-num">01</span>
         <h3>Beginner</h3>
-        <p>Foundational questions about yourself, your strengths and your motivations. Perfect for first interviews.</p>
-        <ul>
-          <li>Tell me about yourself</li>
-          <li>What are your strengths?</li>
-          <li>Why do you want this job?</li>
-        </ul>
-        <a routerLink="/auth/signup" class="level-cta">Start Beginner &#8594;</a>
+        <p>Foundational questions about yourself, strengths and motivations.</p>
+        <a routerLink="/auth/signup" class="level-link">Start practising</a>
       </div>
-      <div class="level-card level-intermediate level-featured">
-        <div class="level-badge-top">Most Popular</div>
-        <div class="level-icon level-icon-intermediate">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-        </div>
+      <div class="level-tile level-tile-featured">
+        <span class="level-tag">Popular</span>
+        <span class="level-num">02</span>
         <h3>Intermediate</h3>
-        <p>Behavioural STAR questions requiring specific examples. Ideal for candidates with 1–5 years experience.</p>
-        <ul>
-          <li>Describe a challenge you overcame</li>
-          <li>Tell me about a time you led a team</li>
-          <li>How do you handle conflict?</li>
-        </ul>
-        <a routerLink="/auth/signup" class="level-cta">Start Intermediate &#8594;</a>
+        <p>Behavioural STAR questions with specific examples from experience.</p>
+        <a routerLink="/auth/signup" class="level-link">Start practising</a>
       </div>
-      <div class="level-card level-master">
-        <div class="level-icon level-icon-master">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        </div>
+      <div class="level-tile">
+        <span class="level-num">03</span>
         <h3>Master</h3>
-        <p>Senior-level strategic and complex situational questions. For leadership and executive roles.</p>
-        <ul>
-          <li>How do you drive organisational change?</li>
-          <li>Describe your most complex problem</li>
-          <li>How do you balance tech debt vs delivery?</li>
-        </ul>
-        <a routerLink="/auth/signup" class="level-cta">Start Master &#8594;</a>
+        <p>Senior-level strategic and complex situational questions.</p>
+        <a routerLink="/auth/signup" class="level-link">Start practising</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- COMPANY LOGOS -->
-<section class="logos-section">
-  <p class="logos-label">Get ready for jobs at leading firms</p>
-  <div class="logos-row">
-    <span class="logo-pill" *ngFor="let c of companies">{{ c }}</span>
-  </div>
-</section>
-
-<!-- FEATURES -->
-<section class="features-section">
-  <div class="section-inner">
-    <h2 class="section-title">Everything you need to ace your interview</h2>
-    <p class="section-sub">From AI transcription to NLP relevance scoring — IntervYou gives you the full picture.</p>
-    <div class="features-grid">
-      <div class="feature-card" *ngFor="let f of features">
-        <div class="feature-icon-wrap">
-          <svg class="feature-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" [innerHTML]="f.svgPath"></svg>
-        </div>
-        <h3 class="feature-title">{{ f.title }}</h3>
-        <p class="feature-desc">{{ f.desc }}</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="how-section">
-  <div class="section-inner">
-    <h2 class="section-title">How it works</h2>
-    <div class="steps-row">
-      <div class="step">
-        <div class="step-num">1</div>
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- HOW — numbered steps, clean layout                              -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="how">
+  <div class="how-inner">
+    <h2 class="section-heading">How it works</h2>
+    <div class="how-grid">
+      <div class="how-step">
+        <span class="how-num">01</span>
         <h3>Create an account</h3>
-        <p>Sign up in seconds — no credit card required.</p>
+        <p>Sign up in seconds. No credit card, no commitment.</p>
       </div>
-      <div class="step-connector"></div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <h3>Pick your level</h3>
-        <p>Choose Beginner, Intermediate or Master difficulty.</p>
+      <div class="how-step">
+        <span class="how-num">02</span>
+        <h3>Choose your level</h3>
+        <p>Beginner, Intermediate or Master — pick what fits.</p>
       </div>
-      <div class="step-connector"></div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <h3>Record your answers</h3>
-        <p>Answer 5 AI-curated questions using your microphone.</p>
+      <div class="how-step">
+        <span class="how-num">03</span>
+        <h3>Answer questions</h3>
+        <p>Speak into your mic or type. 5 AI-curated questions per session.</p>
       </div>
-      <div class="step-connector"></div>
-      <div class="step">
-        <div class="step-num">4</div>
+      <div class="how-step">
+        <span class="how-num">04</span>
         <h3>Get instant feedback</h3>
-        <p>Receive scores on fluency, relevance, pace and delivery.</p>
+        <p>Scores, confidence analysis, AI coaching — all in real time.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CTA BANNER -->
-<section class="cta-section">
-  <div class="cta-inner">
-    <h2>Ready to ace your next interview?</h2>
-    <p>Join candidates who practise smarter with IntervYou.</p>
-    <a routerLink="/auth/signup" class="btn-cta">Start Practising Free</a>
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- CTA — final call to action                                      -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="final-cta">
+  <div class="final-cta-inner">
+    <h2>Ready?</h2>
+    <p>Your next interview doesn't have to be stressful.</p>
+    <a routerLink="/auth/signup" class="cta-primary cta-primary-lg">Get started free</a>
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer class="footer">
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- FOOTER                                                          -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<footer class="site-footer">
   <div class="footer-inner">
-    <span class="footer-logo"><span class="footer-logo-interv">Interv</span><span class="footer-logo-you">You</span></span>
-    <div class="footer-links">
-      <a routerLink="/contact">Contact</a>
+    <div class="footer-brand">
+      <span class="f-interv">Interv</span><span class="f-you">You</span>
     </div>
-    <span class="footer-copy">&copy; 2026 IntervYou. All rights reserved.</span>
+    <div class="footer-nav">
+      <a routerLink="/contact">Contact</a>
+      <a routerLink="/auth/signup">Sign Up</a>
+      <a routerLink="/auth/signin">Sign In</a>
+    </div>
+    <p class="footer-copy">&copy; 2026 IntervYou. Built for better interviews.</p>
   </div>
 </footer>
