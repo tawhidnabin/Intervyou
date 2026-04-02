@@ -10,8 +10,8 @@ export class ApiService {
   constructor(private http: HttpClient) {}
 
   // Questions
-  getQuestions(level = 'beginner'): Observable<any[]> {
-    return this.http.get<any[]>(`${BASE}/questions/?level=${level}`);
+  getQuestions(level = 'beginner', category = 'all', count = 5): Observable<any[]> {
+    return this.http.get<any[]>(`${BASE}/questions/?level=${level}&category=${category}&count=${count}`);
   }
 
   // Sessions

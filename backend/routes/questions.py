@@ -5,7 +5,6 @@ import random
 
 questions_bp = Blueprint('questions', __name__)
 
-# Map level names to difficulty values
 LEVEL_MAP = {
     'beginner': 'easy',
     'intermediate': 'medium',
@@ -17,14 +16,35 @@ LEVEL_MAP = {
 @jwt_required()
 def get_questions():
     level = request.args.get('level', 'beginner')
+    category = request.args.get('category', 'all')
+    count = min(int(request.args.get('count', 5)), 15)  # max 15
+
     difficulty = LEVEL_MAP.get(level, 'easy')
 
-    questions = Question.query.filter_by(difficulty=difficulty).all()
+    query = Question.query.filter_by(difficulty=difficulty)
+    if category != 'all':
+        query = query.filter_by(category=category)
 
-    # Fallback: if not enough questions for this difficulty, include all
+    questions = query.all()
+
+    # Fallback if not enough
+    if len(questions) < 3:
+        questions = Question.query.filter_by(difficulty=difficulty).all()
     if len(questions) < 3:
         questions = Question.query.all()
 
-    # Shuffle and return up to 5
     random.shuffle(questions)
-    return jsonify([q.to_dict() for q in questions[:5]]), 200
+    return jsonify([q.to_dict() for q in questions[:count]]), 200
+
+
+@questions_bp.route('/categories', methods=['GET'])
+@jwt_required()
+def get_categories():
+    """Return available categories with question counts per level."""
+    categories = {}
+    for q in Question.query.all():
+        cat = q.category
+        if cat not in categories:
+            categories[cat] = {'easy': 0, 'medium': 0, 'hard': 0}
+        categories[cat][q.difficulty] = categories[cat].get(q.difficulty, 0) + 1
+    return jsonify(categories), 200

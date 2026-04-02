@@ -45,7 +45,9 @@ export class PracticeSessionComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.sessionId = Number(this.route.snapshot.paramMap.get('sessionId'));
     this.level = this.route.snapshot.queryParamMap.get('level') || 'beginner';
-    this.api.getQuestions(this.level).subscribe({
+    const category = this.route.snapshot.queryParamMap.get('category') || 'all';
+    const count = this.route.snapshot.queryParamMap.get('count') || '5';
+    this.api.getQuestions(this.level, category, parseInt(count)).subscribe({
       next: qs => { this.questions = qs; this.state = 'ready'; },
       error: () => { this.error = 'Failed to load questions.'; this.state = 'ready'; }
     });

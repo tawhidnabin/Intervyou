@@ -183,3 +183,48 @@ h1 { font-size: 26px; font-weight: 800; color: #0f172a; margin: 0 0 10px; }
   transition: color 0.15s;
   &:hover { color: #4f46e5; }
 }
+
+/* ── Category chips ── */
+.category-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.category-chip {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: white;
+  flex: 1;
+  min-width: 100px;
+  &:hover { border-color: #4f46e5; background: #f8fafc; }
+  &.selected { border-color: #4f46e5; background: #eef2ff; }
+}
+.cat-label { font-size: 13px; font-weight: 700; color: #0f172a; }
+.cat-desc { font-size: 11px; color: #94a3b8; }
+
+/* ── Question count buttons ── */
+.count-row {
+  display: flex;
+  gap: 8px;
+}
+.count-btn {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  background: white;
+  font-size: 16px;
+  font-weight: 700;
+  color: #475569;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+  &:hover { border-color: #4f46e5; color: #4f46e5; }
+  &.selected { border-color: #4f46e5; background: #eef2ff; color: #4f46e5; }
+}
