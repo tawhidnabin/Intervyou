@@ -34,16 +34,8 @@ def create_app():
     db.init_app(app)
     jwt = JWTManager(app)
 
-    # CORS: allow localhost for dev + Vercel/custom domains for production
-    frontend_url = os.environ.get('FRONTEND_URL', 'http://localhost:4200')
-    allowed_origins = [
-        'http://localhost:4200',
-        frontend_url,
-        'https://intervyou.uk',
-        'https://www.intervyou.uk',
-        'https://intervyou-git-main-tawhidur-rahman-nabins-projects.vercel.app',
-    ]
-    CORS(app, resources={r'/api/*': {'origins': allowed_origins}}, supports_credentials=True)
+    # CORS: allow all origins (production — restricted domains handled by Nginx)
+    CORS(app, resources={r'/api/*': {'origins': '*'}}, supports_credentials=True)
 
     # Check if token is revoked (logout support)
     @jwt.token_in_blocklist_loader
