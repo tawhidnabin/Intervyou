@@ -34,8 +34,8 @@ def create_app():
     db.init_app(app)
     jwt = JWTManager(app)
 
-    # CORS: allow all origins (production — restricted domains handled by Nginx)
-    CORS(app, resources={r'/api/*': {'origins': '*'}}, supports_credentials=True)
+    # CORS: allow all origins (JWT auth is via headers, not cookies)
+    CORS(app, resources={r'/api/*': {'origins': '*'}})
 
     # Check if token is revoked (logout support)
     @jwt.token_in_blocklist_loader
