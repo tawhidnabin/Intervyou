@@ -1,7 +1,4 @@
 {
-  "framework": null,
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist/intervyou-frontend/browser",
   "redirects": [
     {
       "source": "/:path*",
@@ -14,10 +11,6 @@
     {
       "source": "/api/:path*",
       "destination": "http://13.51.162.43/api/:path*"
-    },
-    {
-      "source": "/:path*",
-      "destination": "/index.html"
     }
   ]
 }
