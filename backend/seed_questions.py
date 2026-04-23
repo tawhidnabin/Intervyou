@@ -1,7 +1,4 @@
-"""
-IntervYou Question Bank — 60+ questions across 4 categories and 3 difficulty levels.
-Categories: general, behavioural, motivational, technical
-"""
+
 
 QUESTIONS = [
     # ═══════════════════════════════════════════════════════════════
