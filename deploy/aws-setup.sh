@@ -33,8 +33,8 @@ echo "=== 5. Installing Ollama ==="
 curl -fsSL https://ollama.com/install.sh | sh
 
 echo ""
-echo "=== 6. Pulling qwen3:8b model (this takes a few minutes) ==="
-ollama pull qwen3:8b
+echo "=== 6. Pulling qwen3:1.7b model (this takes a few minutes) ==="
+ollama pull qwen3:1.7b
 
 echo ""
 echo "=== 7. Cloning project ==="
@@ -55,7 +55,7 @@ echo "=== 9. Creating environment file ==="
 JWT_KEY=$(python3 -c "import secrets; print(secrets.token_hex(32))")
 cat > backend/.env << EOF
 JWT_SECRET_KEY=${JWT_KEY}
-FRONTEND_URL=https://intervyou.vercel.app
+FRONTEND_URL=https://intervyou.uk
 FLASK_ENV=production
 EOF
 echo "Created backend/.env"

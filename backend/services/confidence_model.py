@@ -4,7 +4,6 @@ Custom ML model that predicts speaker confidence from audio + text features.
 Uses scikit-learn Random Forest trained on extracted Librosa features.
 """
 import os
-import json
 import numpy as np
 import librosa
 import joblib
